@@ -103,6 +103,7 @@ class AttendanceRewardStatus(str, enum.Enum):
     COLLECTED = "AttendanceRewardStatusTakenAward"
     FORBIDDEN = "AttendanceRewardStatusForbid"
     UNAVAILABLE = "AttendanceRewardStatusUnfinished"
+    FINISHED_NON_REWARD = "AttendanceRewardStatusFinishedNonReward"
 
 
 class AttendanceReward(APIModel):
