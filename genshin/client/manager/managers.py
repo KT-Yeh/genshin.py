@@ -146,6 +146,8 @@ class BaseCookieManager(abc.ABC):
                 if not self.multi:
                     new_cookies = parse_cookie(response.cookies)
                     new_keys = new_cookies.keys() - cookies.keys()
+                    new_keys.discard("ltmid_v2")
+                    new_keys.discard("aliyungf_tc")
                     if new_keys:
                         cookies.update(new_cookies)
                         _LOGGER.debug("Updating cookies for %s: %s", get_cookie_identifier(cookies), new_keys)
