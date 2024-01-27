@@ -211,7 +211,7 @@ class CookieManager(BaseCookieManager):
         return False
 
     @property
-    def jar(self) -> http.cookies.SimpleCookie[str]:
+    def jar(self) -> http.cookies.SimpleCookie:
         """SimpleCookie containing the cookies."""
         return http.cookies.SimpleCookie(self.cookies)
 
@@ -251,6 +251,9 @@ class CookieManager(BaseCookieManager):
         """
         for name, value in self.cookies.items():
             if name in ("ltuid", "account_id", "ltuid_v2", "account_id_v2"):
+                if not value:
+                    raise ValueError(f"{name} can not be an empty string.")
+
                 return int(value)
 
         return None
