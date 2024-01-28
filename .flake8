@@ -18,6 +18,9 @@ ignore =
     S101, S303, S311, S324,
     W503,
 
+# Recommended by black
+extend-ignore = E203, E704
+
 # F401: unused import.
 # F403: cannot detect unused vars if we use starred import
 # D10*: docstrings

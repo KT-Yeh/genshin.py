@@ -1,4 +1,5 @@
 """Starrail chronicle challenge."""
+
 from typing import List
 
 from genshin.models.model import Aliased, APIModel
