@@ -49,6 +49,10 @@ class GenshinAccount(APIModel):
             return types.Game.HONKAI
         elif "hkrpg" in self.game_biz:
             return types.Game.STARRAIL
+        elif "nxx" in self.game_biz:
+            if "tw" in self.game_biz:
+                return types.Game.THEMIS_TW
+            return types.Game.THEMIS
 
         try:
             return types.Game(self.game_biz)

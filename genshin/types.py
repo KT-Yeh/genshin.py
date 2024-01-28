@@ -32,6 +32,12 @@ class Game(str, enum.Enum):
     STARRAIL = "hkrpg"
     """Honkai Star Rail"""
 
+    THEMIS = "tot"
+    """Tears of Themis"""
+
+    THEMIS_TW = "tot_tw"
+    """Tears of Themis (Taiwan)"""
+
 
 IDOr = typing.Union[int, UniqueT]
 """Allows partial objects."""
