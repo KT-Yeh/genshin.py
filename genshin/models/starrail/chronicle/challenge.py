@@ -15,7 +15,15 @@ from genshin.models.starrail.character import FloorCharacter
 
 from .base import PartialTime
 
-__all__ = ["FloorNode", "StarRailChallenge", "StarRailFloor", "FictionBuff", "FictionFloorNode","FictionFloor", "StarRailPureFiction"]
+__all__ = [
+    "FictionBuff",
+    "FictionFloor",
+    "FictionFloorNode",
+    "FloorNode",
+    "StarRailChallenge",
+    "StarRailFloor",
+    "StarRailPureFiction",
+]
 
 
 class FloorNode(APIModel):
@@ -50,6 +58,7 @@ class StarRailChallenge(APIModel):
 
     floors: List[StarRailFloor] = Aliased("all_floor_detail")
 
+
 class FictionBuff(APIModel):
     """Buff for a Pure Fiction floor."""
 
@@ -58,15 +67,17 @@ class FictionBuff(APIModel):
     description: str = Aliased("desc_mi18n")
     icon: str
 
+
 class FictionFloorNode(FloorNode):
     """Node for a Pure Fiction floor."""
 
     buff: FictionBuff
     score: int
 
+
 class FictionFloor(APIModel):
     """Floor in a Pure Fiction challenge."""
-    
+
     id: int = Aliased("maze_id")
     name: str
     round_num: int
@@ -83,7 +94,7 @@ class FictionFloor(APIModel):
 
 class StarRailPureFiction(APIModel):
     """Pure Fiction challenge in a season."""
-    
+
     name: str
     season_id: int
     begin_time: PartialTime
