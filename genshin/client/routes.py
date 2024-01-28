@@ -177,11 +177,14 @@ REWARD_URL = GameRoute(
         genshin="https://sg-hk4e-api.hoyolab.com/event/sol?act_id=e202102251931481",
         honkai3rd="https://sg-public-api.hoyolab.com/event/mani?act_id=e202110291205111",
         hkrpg="https://sg-public-api.hoyolab.com/event/luna/os?act_id=e202303301540311",
+        tot="https://sg-public-api.hoyolab.com/event/luna/os?act_id=e202202281857121",
+        tot_tw="https://sg-public-api.hoyolab.com/event/luna/os?act_id=e202308141137581",
     ),
     chinese=dict(
         genshin="https://api-takumi.mihoyo.com/event/bbs_sign_reward/?act_id=e202009291139501",
         honkai3rd="https://api-takumi.mihoyo.com/event/luna/?act_id=e202207181446311",
         hkrpg="https://api-takumi.mihoyo.com/event/luna/?act_id=e202304121516551",
+        tot="https://api-takumi.mihoyo.com/event/luna/?act_id=e202202251749321",
     ),
 )
 

@@ -64,6 +64,10 @@ def get_prod_game_biz(region: types.Region, game: types.Game) -> str:
         game_biz = "hk4e_"
     elif game == types.Game.STARRAIL:
         game_biz = "hkrpg_"
+    elif game == types.Game.THEMIS:
+        game_biz = "nxx_"
+    elif game == types.Game.THEMIS_TW:
+        return "nxx_tw"
 
     if region == types.Region.OVERSEAS:
         game_biz += "global"
