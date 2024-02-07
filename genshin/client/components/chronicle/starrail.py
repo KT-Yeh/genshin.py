@@ -138,4 +138,17 @@ class StarRailBattleChronicleClient(base.BaseBattleChronicleClient):
         """Get starrail pure fiction runs."""
         payload = dict(schedule_type=2 if previous else 1, need_all="true")
         data = await self._request_starrail_record("challenge_story", uid, lang=lang, payload=payload)
+
+        # In "groups", it contains time data from both the current season and previous season.
+        data = dict(data)
+        time = data["groups"][0]
+        if previous is True and len(data["groups"]) > 1:
+            time = data["groups"][1]
+
+        # Extract the time data.
+        data["schedule_id"] = time["schedule_id"]
+        data["begin_time"] = time["begin_time"]
+        data["end_time"] = time["end_time"]
+        data["name_mi18n"] = time["name_mi18n"]
+
         return models.StarRailPureFiction(**data)
