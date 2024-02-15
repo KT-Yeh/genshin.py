@@ -28,12 +28,14 @@ class FloorNode(APIModel):
 class StarRailFloor(APIModel):
     """Floor in a challenge."""
 
+    id: int = Aliased("maze_id")
     name: str
     round_num: int
     star_num: int
     node_1: FloorNode
     node_2: FloorNode
     is_chaos: bool
+    is_fast: bool
 
 
 class StarRailChallenge(APIModel):
