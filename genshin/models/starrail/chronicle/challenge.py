@@ -1,6 +1,14 @@
 """Starrail chronicle challenge."""
 
-from typing import List, Optional
+from typing import TYPE_CHECKING, List, Optional
+
+if TYPE_CHECKING:
+    import pydantic.v1 as pydantic
+else:
+    try:
+        import pydantic.v1 as pydantic
+    except ImportError:
+        import pydantic
 
 from genshin.models.model import Aliased, APIModel
 from genshin.models.starrail.character import FloorCharacter

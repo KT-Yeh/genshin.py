@@ -39,6 +39,9 @@ class Game(str, enum.Enum):
     THEMIS_TW = "tot_tw"
     """Tears of Themis (Taiwan)"""
 
+    ZZZ = "nap"
+    """Zenless Zone Zero"""
+
 
 IDOr = typing.Union[int, UniqueT]
 """Allows partial objects."""

@@ -13,24 +13,31 @@ __all__ = [
     "BBS_REFERER_URL",
     "BBS_URL",
     "CALCULATOR_URL",
+    "CHECK_QRCODE_URL",
+    "CN_WEB_LOGIN_URL",
     "COMMUNITY_URL",
     "COOKIE_V2_REFRESH_URL",
+    "CREATE_MMT_URL",
+    "CREATE_QRCODE_URL",
     "DETAIL_LEDGER_URL",
     "GACHA_URL",
+    "GET_COOKIE_TOKEN_BY_GAME_TOKEN_URL",
+    "GET_STOKEN_BY_GAME_TOKEN_URL",
     "HK4E_URL",
     "INFO_LEDGER_URL",
     "LINEUP_URL",
     "MI18N",
     "RECORD_URL",
     "REWARD_URL",
-    "Route",
     "TAKUMI_URL",
     "TEAPOT_URL",
     "VERIFY_EMAIL_URL",
+    "VERIFY_MMT_URL",
     "WEBAPI_URL",
     "WEBSTATIC_URL",
     "WEB_LOGIN_URL",
     "YSULOG_URL",
+    "Route",
 ]
 
 
@@ -97,8 +104,8 @@ class GameRoute(BaseRoute):
 
 
 WEBSTATIC_URL = InternationalRoute(
-    "https://webstatic-sea.hoyoverse.com/",
-    "https://webstatic.mihoyo.com/",
+    "https://operation-webstatic.hoyoverse.com/",
+    "https://operation-webstatic.mihoyo.com/",
 )
 
 WEBAPI_URL = InternationalRoute(
@@ -181,8 +188,8 @@ REWARD_URL = GameRoute(
         tot_tw="https://sg-public-api.hoyolab.com/event/luna/os?act_id=e202308141137581",
     ),
     chinese=dict(
-        genshin="https://api-takumi.mihoyo.com/event/bbs_sign_reward/?act_id=e202009291139501",
-        honkai3rd="https://api-takumi.mihoyo.com/event/luna/?act_id=e202207181446311",
+        genshin="https://api-takumi.mihoyo.com/event/luna/?act_id=e202311201442471",
+        honkai3rd="https://api-takumi.mihoyo.com/event/luna/?act_id=e202306201626331",
         hkrpg="https://api-takumi.mihoyo.com/event/luna/?act_id=e202304121516551",
         tot="https://api-takumi.mihoyo.com/event/luna/?act_id=e202202251749321",
     ),
@@ -198,7 +205,7 @@ CODE_URL = GameRoute(
 
 GACHA_URL = GameRoute(
     overseas=dict(
-        genshin="https://hk4e-api-os.hoyoverse.com/event/gacha_info/api/",
+        genshin="https://hk4e-api-os.hoyoverse.com/gacha_info/api/",
         hkrpg="https://api-os-takumi.mihoyo.com/common/gacha_record/api/",
     ),
     chinese=dict(
@@ -212,16 +219,78 @@ YSULOG_URL = InternationalRoute(
 )
 
 MI18N = dict(
-    bbs="https://webstatic-sea.mihoyo.com/admin/mi18n/bbs_cn/m11241040191111/m11241040191111-{lang}.json",
+    bbs="https://fastcdn.hoyoverse.com/mi18n/bbs_oversea/m11241040191111/m11241040191111-{lang}.json",
     inquiry="https://mi18n-os.hoyoverse.com/webstatic/admin/mi18n/hk4e_global/m02251421001311/m02251421001311-{lang}.json",
 )
 
 COOKIE_V2_REFRESH_URL = Route("https://sg-public-api.hoyoverse.com/account/ma-passport/token/getBySToken")
+GET_COOKIE_TOKEN_BY_GAME_TOKEN_URL = Route("https://api-takumi.mihoyo.com/auth/api/getCookieAccountInfoByGameToken")
+GET_STOKEN_BY_GAME_TOKEN_URL = Route("https://passport-api.mihoyo.com/account/ma-cn-session/app/getTokenByGameToken")
 
 WEB_LOGIN_URL = Route("https://sg-public-api.hoyolab.com/account/ma-passport/api/webLoginByPassword")
 APP_LOGIN_URL = Route("https://sg-public-api.hoyoverse.com/account/ma-passport/api/appLoginByPassword")
+CN_WEB_LOGIN_URL = Route("https://passport-api.miyoushe.com/account/ma-cn-passport/web/loginByPassword")
 
 SEND_VERIFICATION_CODE_URL = Route(
     "https://sg-public-api.hoyoverse.com/account/ma-verifier/api/createEmailCaptchaByActionTicket"
 )
 VERIFY_EMAIL_URL = Route("https://sg-public-api.hoyoverse.com/account/ma-verifier/api/verifyActionTicketPartly")
+
+CHECK_MOBILE_VALIDITY_URL = Route("https://webapi.account.mihoyo.com/Api/is_mobile_registrable")
+MOBILE_OTP_URL = Route("https://passport-api.miyoushe.com/account/ma-cn-verifier/verifier/createLoginCaptcha")
+MOBILE_LOGIN_URL = Route("https://passport-api.miyoushe.com/account/ma-cn-passport/web/loginByMobileCaptcha")
+
+CREATE_QRCODE_URL = Route("https://hk4e-sdk.mihoyo.com/hk4e_cn/combo/panda/qrcode/fetch")
+CHECK_QRCODE_URL = Route("https://hk4e-sdk.mihoyo.com/hk4e_cn/combo/panda/qrcode/query")
+
+CREATE_MMT_URL = InternationalRoute(
+    overseas="https://sg-public-api.hoyolab.com/event/toolcomsrv/risk/createGeetest?is_high=true",
+    chinese="https://api-takumi-record.mihoyo.com/game_record/app/card/wapi/createVerification?is_high=false",
+)
+
+VERIFY_MMT_URL = Route("https://sg-public-api.hoyolab.com/event/toolcomsrv/risk/verifyGeetest")
+
+GAME_RISKY_CHECK_URL = InternationalRoute(
+    overseas="https://api-account-os.hoyoverse.com/account/risky/api/check",
+    chinese="https://gameapi-account.mihoyo.com/account/risky/api/check",
+)
+
+SHIELD_LOGIN_URL = GameRoute(
+    overseas=dict(
+        genshin="https://hk4e-sdk-os.hoyoverse.com/hk4e_global/mdk/shield/api/login",
+        honkai3rd="https://bh3-sdk-os.hoyoverse.com/bh3_os/mdk/shield/api/login",
+        hkrpg="https://hkrpg-sdk-os.hoyoverse.com/hkrpg_global/mdk/shield/api/login",
+        nap="https://nap-sdk-os.hoyoverse.com/nap_global/mdk/shield/api/login",
+    ),
+    chinese=dict(
+        genshin="https://hk4e-sdk.mihoyo.com/hk4e_cn/mdk/shield/api/login",
+        honkai3rd="https://api-sdk.mihoyo.com/bh3_cn/mdk/shield/api/login",
+        hkrpg="https://hkrpg-sdk.mihoyo.com/hkrpg_cn/mdk/shield/api/login",
+        nap="https://nap-sdk.mihoyo.com/nap_cn/mdk/shield/api/login",
+    ),
+)
+
+PRE_GRANT_TICKET_URL = InternationalRoute(
+    overseas="https://api-account-os.hoyoverse.com/account/device/api/preGrantByTicket",
+    chinese="https://gameapi-account.mihoyo.com/account/device/api/preGrantByTicket",
+)
+
+DEVICE_GRANT_URL = InternationalRoute(
+    overseas="https://api-account-os.hoyoverse.com/account/device/api/grant",
+    chinese="https://gameapi-account.mihoyo.com/account/device/api/grant",
+)
+
+GAME_LOGIN_URL = GameRoute(
+    overseas=dict(
+        genshin="https://hk4e-sdk-os.hoyoverse.com/hk4e_global/combo/granter/login/v2/login",
+        honkai3rd="https://bh3-sdk-os.hoyoverse.com/bh3_os/combo/granter/login/v2/login",
+        hkrpg="https://hkrpg-sdk-os.hoyoverse.com/hkrpg_global/combo/granter/login/v2/login",
+        nap="https://nap-sdk-os.hoyoverse.com/nap_global/combo/granter/login/v2/login",
+    ),
+    chinese=dict(
+        genshin="https://hk4e-sdk.mihoyo.com/hk4e_cn/combo/granter/login/v2/login",
+        honkai3rd="https://api-sdk.mihoyo.com/bh3_cn/combo/granter/login/v2/login",
+        hkrpg="https://hkrpg-sdk.mihoyo.com/hkrpg_cn/combo/granter/login/v2/login",
+        nap="https://nap-sdk.mihoyo.com/nap_cn/combo/granter/login/v2/login",
+    ),
+)

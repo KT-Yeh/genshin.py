@@ -68,8 +68,10 @@ async def accounts(client: genshin.Client) -> None:
 
 genshin_group: click.Group = click.Group("genshin", help="Genshin-related commands.")
 honkai_group: click.Group = click.Group("honkai", help="Honkai-related commands.")
+starrail_group: click.Group = click.Group("starrail", help="StarRail-related commands.")
 cli.add_command(genshin_group)
 cli.add_command(honkai_group)
+cli.add_command(starrail_group)
 
 
 @honkai_group.command("stats")
@@ -86,7 +88,7 @@ async def honkai_stats(client: genshin.Client, uid: int) -> None:
     for k, v in data.stats.as_dict(lang=client.lang).items():
         if isinstance(v, dict):
             click.echo(f"{k}:")
-            for nested_k, nested_v in typing.cast("dict[str, object]", v).items():
+            for nested_k, nested_v in typing.cast("typing.Dict[str, object]", v).items():
                 click.echo(f"  {nested_k}: {click.style(str(nested_v), bold=True)}")
         else:
             click.echo(f"{k}: {click.style(str(v), bold=True)}")
@@ -199,6 +201,33 @@ async def genshin_notes(client: genshin.Client, uid: typing.Optional[int]) -> No
             click.echo(f" - {expedition.status}")
 
 
+@starrail_group.command("notes")
+@click.argument("uid", type=int, default=None, required=False)
+@client_command
+async def starrail_notes(client: genshin.Client, uid: typing.Optional[int]) -> None:
+    """Show real-Time starrail notes."""
+    click.echo("Real-Time notes.")
+
+    data = await client.get_starrail_notes(uid)
+
+    click.echo(f"{click.style('TB power:', bold=True)} {data.current_stamina}/{data.max_stamina}", nl=False)
+    click.echo(f" (Full in {data.stamina_recover_time})" if data.stamina_recover_time > datetime.timedelta(0) else "")
+    click.echo(f"{click.style('Reserved TB power:', bold=True)} {data.current_reserve_stamina}/2400")
+    click.echo(f"{click.style('Daily training:', bold=True)} {data.current_train_score}/{data.max_train_score}")
+    click.echo(f"{click.style('Simulated Universe:', bold=True)} {data.current_rogue_score}/{data.max_rogue_score}")
+    click.echo(
+        f"{click.style('Echo of War:', bold=True)} {data.remaining_weekly_discounts}/{data.max_weekly_discounts}"
+    )
+
+    click.echo(f"\n{click.style('Assignments:', bold=True)} {data.accepted_epedition_num}/{data.total_expedition_num}")
+    for expedition in data.expeditions:
+        if expedition.remaining_time > datetime.timedelta(0):
+            remaining = f"{expedition.remaining_time} remaining"
+            click.echo(f" - {expedition.name} | {remaining}")
+        else:
+            click.echo(f" - {expedition.name} | Finished")
+
+
 @cli.command()
 @click.option("--scenario", help="Scenario ID or name to use (eg '12-3').", type=str, default=None)
 @client_command
@@ -309,8 +338,8 @@ def authkey() -> None:
 async def login(account: str, password: str, port: int) -> None:
     """Login with a password."""
     client = genshin.Client()
-    cookies = await client.login_with_password(account, password, port=port)
-    cookies = await genshin.complete_cookies(cookies)
+    result = await client.os_login_with_password(account, password, port=port)
+    cookies = await genshin.complete_cookies(result.dict())
 
     base: http.cookies.BaseCookie[str] = http.cookies.BaseCookie(cookies)
     click.echo(f"Your cookies are: {click.style(base.output(header='', sep=';'), bold=True)}")

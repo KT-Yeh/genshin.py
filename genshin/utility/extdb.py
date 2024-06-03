@@ -2,6 +2,7 @@
 
 import asyncio
 import json
+import logging
 import time
 import typing
 import warnings
@@ -19,6 +20,8 @@ __all__ = (
     "update_characters_enka",
     "update_characters_genshindata",
 )
+
+LOGGER_ = logging.getLogger(__name__)
 
 CACHE_FILE = fs.get_tempdir() / "characters.json"
 
@@ -170,8 +173,10 @@ async def update_characters_enka(langs: typing.Sequence[str] = ()) -> None:
             continue  # traveler element
 
         for short_lang, loc in locs.items():
+            if (lang := ENKA_LANG_MAP.get(short_lang)) is None:
+                continue
             update_character_name(
-                lang=ENKA_LANG_MAP[short_lang],
+                lang=lang,
                 id=int(strid),
                 icon_name=char["SideIconName"][len("UI_AvatarIcon_Side_") :],  # noqa: E203
                 name=loc[str(char["NameTextMapHash"])],
@@ -235,7 +240,7 @@ async def update_characters_any(
         try:
             await updator(langs)
         except Exception:
-            continue
+            LOGGER_.exception("Failed to update characters with %s", updator.__name__)
         else:
             return
 

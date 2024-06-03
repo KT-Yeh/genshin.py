@@ -1,9 +1,10 @@
 """Run setuptools."""
+
 from setuptools import find_packages, setup
 
 setup(
     name="genshin",
-    version="1.6.2",
+    version="1.7.1",
     author="thesadru",
     author_email="thesadru@gmail.com",
     description="An API wrapper for Genshin Impact.",
@@ -17,9 +18,9 @@ setup(
     python_requires=">=3.8",
     install_requires=["aiohttp", "pydantic"],
     extras_require={
-        "all": ["browser-cookie3", "rsa", "click"],
+        "all": ["browser-cookie3", "rsa", "click", "qrcode[pil]"],
         "cookies": ["browser-cookie3"],
-        "geetest": ["rsa"],
+        "auth": ["rsa", "qrcode[pil]"],
         "cli": ["click"],
     },
     include_package_data=True,
