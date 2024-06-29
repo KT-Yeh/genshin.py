@@ -87,7 +87,7 @@ class StarRailChallenge(APIModel):
     def __extract_name(cls, values: Dict[str, Any]) -> Dict[str, Any]:
         if "seasons" in values and isinstance(values["seasons"], List):
             seasons: List[Dict[str, Any]] = values["seasons"]
-            if len(seasons) > 0:
+            if len(seasons) > 0 and "name_mi18n" in seasons[0]:
                 values["name"] = seasons[0]["name_mi18n"]
 
         return values
@@ -144,10 +144,14 @@ class StarRailPureFiction(APIModel):
         if "seasons" in values and isinstance(values["seasons"], List):
             seasons: List[Dict[str, Any]] = values["seasons"]
             if len(seasons) > 0:
-                values["name"] = seasons[0]["name_mi18n"]
-                values["season_id"] = seasons[0]["schedule_id"]
-                values["begin_time"] = seasons[0]["begin_time"]
-                values["end_time"] = seasons[0]["end_time"]
+                if "name_mi18n" in seasons[0]:
+                    values["name"] = seasons[0]["name_mi18n"]
+                if "schedule_id" in seasons[0]:
+                    values["season_id"] = seasons[0]["schedule_id"]
+                if "begin_time" in seasons[0]:
+                    values["begin_time"] = seasons[0]["begin_time"]
+                if "end_time" in seasons[0]:
+                    values["end_time"] = seasons[0]["end_time"]
 
         return values
 
