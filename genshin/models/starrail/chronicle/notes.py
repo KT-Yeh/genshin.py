@@ -33,7 +33,7 @@ class StarRailNote(APIModel):
     current_stamina: int
     max_stamina: int
     stamina_recover_time: datetime.timedelta
-    accepted_epedition_num: int
+    accepted_expedition_num: int = Aliased("accepted_epedition_num")
     total_expedition_num: int
     expeditions: typing.Sequence[StarRailExpedition]
 
@@ -46,6 +46,13 @@ class StarRailNote(APIModel):
     """Current simulated universe weekly points"""
     max_rogue_score: int
     """Max simulated universe weekly points"""
+
+    have_bonus_synchronicity_points: bool = Aliased("rogue_tourn_weekly_unlocked")
+    """Whether the Divergent Universe is unlocked"""
+    max_bonus_synchronicity_points: int = Aliased("rogue_tourn_weekly_max")
+    """The max number of this week's Bonus Synchronicity Points"""
+    current_bonus_synchronicity_points: int = Aliased("rogue_tourn_weekly_cur")
+    """The current number of this week's Bonus Synchronicity Points"""
 
     remaining_weekly_discounts: int = Aliased("weekly_cocoon_cnt")
     """Remaining echo of war rewards"""
