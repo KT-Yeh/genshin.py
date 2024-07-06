@@ -47,11 +47,11 @@ class BaseBattleChronicleClient(base.BaseClient):
         **kwargs: typing.Any,
     ) -> typing.Mapping[str, typing.Any]:
         """Make a request towards the game record endpoint."""
-        base_url = routes.RECORD_URL.get_url(region or self.region)
+        game = game or self.default_game
+        if game is None:
+            raise RuntimeError("No default game set.")
 
-        if game:
-            base_url = base_url / game.value / "api"
-
+        base_url = routes.RECORD_URL.get_url(region or self.region, game)
         url = base_url / endpoint
 
         mi18n_task = asyncio.create_task(self._fetch_mi18n("bbs", lang=lang or self.lang))

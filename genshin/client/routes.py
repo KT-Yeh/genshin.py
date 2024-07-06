@@ -134,9 +134,19 @@ COMMUNITY_URL = InternationalRoute(
     overseas="https://bbs-api-os.hoyolab.com/community/",
     chinese="https://api-takumi-record.mihoyo.com/community/",
 )
-RECORD_URL = InternationalRoute(
-    overseas="https://bbs-api-os.hoyolab.com/game_record/",
-    chinese="https://api-takumi-record.mihoyo.com/game_record/app/",
+RECORD_URL = GameRoute(
+    overseas=dict(
+        genshin="https://bbs-api-os.hoyolab.com/game_record/genshin/api",
+        hkrpg="https://bbs-api-os.hoyolab.com/game_record/hkrpg/api",
+        honkai3rd="https://bbs-api-os.hoyolab.com/game_record/honkai3rd/api",
+        nap="https://sg-act-nap-api.hoyolab.com/event/game_record_zzz/api/zzz",
+    ),
+    chinese=dict(
+        genshin="https://api-takumi-record.mihoyo.com/game_record/app/genshin/api",
+        hkrpg="https://api-takumi-record.mihoyo.com/game_record/app/hkrpg/api",
+        honkai3rd="https://api-takumi-record.mihoyo.com/game_record/app/honkai3rd/api",
+        nap="https://api-takumi-record.mihoyo.com/event/game_record_zzz/api/zzz",
+    ),
 )
 LINEUP_URL = InternationalRoute(
     overseas="https://sg-public-api.hoyoverse.com/event/simulatoros/",
@@ -186,12 +196,14 @@ REWARD_URL = GameRoute(
         hkrpg="https://sg-public-api.hoyolab.com/event/luna/os?act_id=e202303301540311",
         tot="https://sg-public-api.hoyolab.com/event/luna/os?act_id=e202202281857121",
         tot_tw="https://sg-public-api.hoyolab.com/event/luna/os?act_id=e202308141137581",
+        nap="https://sg-act-nap-api.hoyolab.com/event/luna/zzz/os?act_id=e202406031448091",
     ),
     chinese=dict(
         genshin="https://api-takumi.mihoyo.com/event/luna/?act_id=e202311201442471",
         honkai3rd="https://api-takumi.mihoyo.com/event/luna/?act_id=e202306201626331",
         hkrpg="https://api-takumi.mihoyo.com/event/luna/?act_id=e202304121516551",
         tot="https://api-takumi.mihoyo.com/event/luna/?act_id=e202202251749321",
+        nap="https://act-nap-api.mihoyo.com/event/luna/zzz/?act_id=e202406242138391",
     ),
 )
 
@@ -199,6 +211,7 @@ CODE_URL = GameRoute(
     overseas=dict(
         genshin="https://sg-hk4e-api.hoyoverse.com/common/apicdkey/api/webExchangeCdkey",
         hkrpg="https://sg-hkrpg-api.hoyoverse.com/common/apicdkey/api/webExchangeCdkey",
+        nap="https://public-operation-nap.hoyoverse.com/common/apicdkey/api/webExchangeCdkey",
     ),
     chinese=dict(),
 )

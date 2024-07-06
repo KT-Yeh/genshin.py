@@ -46,14 +46,16 @@ class GenshinAccount(APIModel):
     def game(self) -> types.Game:
         if "hk4e" in self.game_biz:
             return types.Game.GENSHIN
-        elif "bh3" in self.game_biz:
+        if "bh3" in self.game_biz:
             return types.Game.HONKAI
-        elif "hkrpg" in self.game_biz:
+        if "hkrpg" in self.game_biz:
             return types.Game.STARRAIL
-        elif "nxx" in self.game_biz:
+        if "nxx" in self.game_biz:
             if "tw" in self.game_biz:
                 return types.Game.THEMIS_TW
             return types.Game.THEMIS
+        if "nap" in self.game_biz:
+            return types.Game.ZZZ
 
         try:
             return types.Game(self.game_biz)
