@@ -82,6 +82,7 @@ LANG_MAP = {
 ENKA_LANG_MAP = {
     "zh-CN": "zh-cn",
     "zh-TW": "zh-tw",
+    "zh-tw": "zh-tw",
     "de": "de-de",
     "en": "en-us",
     "es": "es-es",
@@ -229,10 +230,7 @@ async def update_characters_any(
         if len(langs) == 0:
             return
 
-    if len(langs) == 1:
-        updators = [update_characters_ambr, update_characters_enka]
-    else:
-        updators = [update_characters_enka, update_characters_ambr]
+    updators = [update_characters_enka, update_characters_ambr]
 
     updators.append(update_characters_genshindata)
 
