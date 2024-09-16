@@ -17,6 +17,8 @@ from genshin.models.model import Aliased, APIModel
 from . import abyss, activities, characters
 
 __all__ = [
+    "AreaExploration",
+    "BossKill",
     "Exploration",
     "FullGenshinUserStats",
     "GenshinUserStats",
@@ -25,6 +27,8 @@ __all__ = [
     "Stats",
     "Teapot",
     "TeapotRealm",
+    "NatlanReputation",
+    "NatlanTribe",
 ]
 
 
@@ -43,6 +47,7 @@ class Stats(APIModel):
     dendroculi: int =         Aliased("dendroculus_number",     mi18n="bbs/dendro_culus")
     electroculi: int =        Aliased("electroculus_number",    mi18n="bbs/electroculus_god")
     hydroculi: int =          Aliased("hydroculus_number",      mi18n="bbs/hydro_god")
+    pyroculi: int =           Aliased("pyroculus_number",       mi18n="bbs/pyro_gid")
     common_chests: int =      Aliased("common_chest_number",    mi18n="bbs/general_treasure_box_count")
     exquisite_chests: int =   Aliased("exquisite_chest_number", mi18n="bbs/delicacy_treasure_box_count")
     precious_chests: int =    Aliased("precious_chest_number",  mi18n="bbs/rarity_treasure_box_count")
@@ -52,10 +57,10 @@ class Stats(APIModel):
     unlocked_domains: int =   Aliased("domain_number",          mi18n="bbs/unlock_secret_area")
     # fmt: on
 
-    def as_dict(self, lang: typing.Optional[str] = None) -> typing.Mapping[str, typing.Any]:
+    def as_dict(self, lang: str = "en-us") -> typing.Mapping[str, typing.Any]:
         """Turn fields into properly named ones."""
         return {
-            self._get_mi18n(field, lang or self.lang): getattr(self, field.name)
+            self._get_mi18n(field, lang): getattr(self, field.name)
             for field in self.__fields__.values()
             if field.name != "lang"
         }
@@ -67,6 +72,41 @@ class Offering(APIModel):
     name: str
     level: int
     icon: str = ""
+
+
+class BossKill(APIModel):
+    """Boss kills in exploration"""
+
+    name: str
+    kills: int = Aliased("kill_num")
+
+
+class AreaExploration(APIModel):
+    """Area exploration data."""
+
+    name: str
+    raw_explored: int = Aliased("exploration_percentage")
+
+    @property
+    def explored(self) -> float:
+        """The percentage explored. (Note: This can go above 100%)"""
+        return self.raw_explored / 10
+
+
+class NatlanTribe(APIModel):
+    """Natlan tribe data."""
+
+    icon: str
+    image: str
+    name: str
+    id: int
+    level: int
+
+
+class NatlanReputation(APIModel):
+    """Natlan reputation data."""
+
+    tribes: typing.Sequence[NatlanTribe] = Aliased("tribal_list")
 
 
 class Exploration(APIModel):
@@ -88,6 +128,9 @@ class Exploration(APIModel):
     map_url: str
 
     offerings: typing.Sequence[Offering]
+    boss_list: typing.Sequence[BossKill]
+    area_exploration_list: typing.Sequence[AreaExploration]
+    natlan_reputation: typing.Optional[NatlanReputation] = Aliased("natan_reputation", default=None)
 
     @property
     def explored(self) -> float:
