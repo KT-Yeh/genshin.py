@@ -40,10 +40,8 @@ class CharacterWeapon(APIModel, Unique):
     icon: str
     name: str
     rarity: int
-    description: str = Aliased("desc")
     level: int
-    type: str = Aliased("type_name")
-    ascension: int = Aliased("promote_level")
+    type: int
     refinement: int = Aliased("affix_level")
 
 
@@ -108,19 +106,4 @@ class Character(PartialCharacter):
     """Character with equipment."""
 
     weapon: CharacterWeapon
-    artifacts: typing.Sequence[Artifact] = Aliased("reliquaries")
-    constellations: typing.Sequence[Constellation]
-    outfits: typing.Sequence[Outfit] = Aliased("costumes")
-
-    @pydantic.validator("artifacts")
-    def __add_artifact_effect_enabled(cls, artifacts: typing.Sequence[Artifact]) -> typing.Sequence[Artifact]:
-        sets: typing.Dict[int, typing.List[Artifact]] = {}
-        for arti in artifacts:
-            sets.setdefault(arti.set.id, []).append(arti)
-
-        for artifact in artifacts:
-            for effect in artifact.set.effects:
-                if effect.pieces <= len(sets[artifact.set.id]):
-                    effect.enabled = True
-
-        return artifacts
+    weapon_type: int

@@ -43,6 +43,7 @@ class StarRailPath(enum.IntEnum):
     NIHILITY = 5
     PRESERVATION = 6
     ABUNDANCE = 7
+    REMEMBRANCE = 8
 
 
 class StarRailEquipment(APIModel):
